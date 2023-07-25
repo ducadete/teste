@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+	<style>
+#rectangle {
+        width: 100%;
+        height: 30px;
+        background-color: #0d3b70;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+      }
+      
+      #menu {
+        width: 200px;
+        height: 100%;
+        background-color: rgba(63, 118, 201, 0.5);
+        position: fixed;
+        top: 30px;
+        left: -200px;
+        padding: 10px;
+        z-index: 9999;
+        transition: left 0.3s ease-in-out;
+        display: none;
+    
+      }
+      
+      #menu.show {
+        left: 0;
+        display: block;
+      }
+      
+      #menu a {
+        display: block;
+        color: #ffffff;
+        text-decoration: none;
+        margin-bottom: 10px;
+        padding: 5px;
+      }
+      
+      #menu a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+      }
+      
+      #menu-toggle {
+        position: fixed;
+        top: 5px;
+        left: 10px;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        cursor: pointer;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      #menu-toggle i {
+        color: #ffffff;
+      }
+      
+      
+      #date-time {
+        position: fixed;
+        top: 8px;
+        right: 10px;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 9999;
+      }
+      body {
+        background-color: #e8eef3; /* Esta é uma cor de "gelo" em hexadecimal */
+    }
+    
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      
+      h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+      
+      form {
+        background-color: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      form p {
+        font-size: 1.2em;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      
+      form input[type="text"],
+      form input[type="email"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 1.2em;
+      }
+      
+      form input[type="radio"],
+      form input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      
+      form label {
+        font-size: 1.2em;
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      form button[type="submit"],
+      form button[type="reset"],
+      form button[type="button"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+      
+      form button[type="submit"]:hover,
+      form button[type="reset"]:hover,
+      form button[type="button"]:hover {
+        background-color: #0062cc;
+      }
+      .radio-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #333;
+      }
+    
+      .radio-container input[type="radio"] {
+        display: none;
+      }
+    
+      .radio-container label {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #e6e6e6;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+    
+      .radio-container input[type="radio"]:checked + label {
+        background-color: #2196F3;
+        color: #fff;
+      }
+    </style>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+	<div id="rectangle"></div>
+	<div id="menu">
+		<a href="menu.html">Inicio</a>
+		<a href="rotina.html">Rotina</a>
+	</div>
+	<div id="menu-toggle">
+		<svg xmlns="http://www.w3.org/2000/svg" width="448" height="512" viewBox="0 0 448 512">
+			<path fill="white"
+				d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm152 136h144c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+		</svg>
+	</div>
+	<div id="date-time"></div>
+	<br>
+	<br>
+	<div>
+		<h1>Formulário de Rotina</h1>
+		<form>
+			<p>Queixa principal?</p>
+			<input type="text" name="principal"><br>
+
+			<h3>Queixa principal:</h3>
+			<label>
+				<input type="radio" id="doencas_cronicas" name="queixa" value="doencas_cronicas"
+					onclick="mostrarOcultarPerguntas('doencas_cronicas')">
+				Doenças crônicas
+			</label><br>
+
+			<label>
+				<input type="radio" id="radio_alergia" name="queixa" value="alergia"
+					onclick="mostrarOcultarPerguntas('alergia')"> Alergia
+			</label><br>
+
+			<label>
+				<input type="radio" id="respiratorios" name="queixa" value="problemas_respiratorios"
+					onclick="mostrarOcultarPerguntas('problemas_respiratorios')">
+				Problemas respiratórios
+			</label><br>
+
+			<label>
+				<input type="radio" id="radio_ginecologico" name="queixa" value="ginecologico_perguntas"
+					onclick="mostrarOcultarPerguntas('ginecologico')"> Problemas Ginecológicos
+			</label><br>
+
+			<label>
+				<input type="radio" id="gastrointestinais" name="queixa" value="problemas_gastrointestinais"
+					onclick="mostrarOcultarPerguntas('problemas_gastrointestinais')">
+				Problemas gastrointestinais
+			</label><br>
+
+
+
+			<label>
+				<input type="radio" id="musculoesqueleticos" name="queixa" value="problemas_musculoesqueleticos"
+					onclick="mostrarOcultarPerguntas('problemas_musculoesqueleticos')">
+				Problemas musculoesqueleticos
+			</label><br>
+
+			<label>
+				<input type="radio" id="saude_mental" name="queixa" value="problemas_saude_mental">
+				Problemas de saúde mental
+			</label><br>
+
+			<label>
+				<input type="radio" id="dermatologicos" name="queixa" value="problemas_dermatologicos">
+				Problemas dermatológicos
+			</label><br>
+
+			<div>
+				<select id="medicacoes">
+					<option value="">Selecione um medicamento</option>
+				</select>
+
+				<button onclick="adicionarMedicacao(event)">Adicionar</button>
+				<button onclick="removerMedicacao()">Remover</button>
+
+				<div class="main-container">
+					<div>
+						<p>Adicionado:</p>
+						<ul id="menu-medicacoes" class="medicacoes-list"></ul>
+					</div>
+				</div>
+
+				<p>Outra medicação?</p>
+				<input type="text" name="medicacao">
+			</div>
+
+			<div id="doencas_cronicas_perguntas" style="display: none;">
+				<p>Qual problema de saúde?</p>
+				<label><input type="checkbox" name="saude[]" value="HAS"> HAS</label>
+				<label><input type="checkbox" name="saude[]" value="DM"> DM</label>
+				<label><input type="checkbox" name="saude[]" value="Hipercolesterolemia "> Hipercolesterolemia</label>
+				<label><input type="checkbox" name="saude[]" value="Asma"> Asma</label>
+				<label><input type="checkbox" name="saude[]" value="DPOC"> DPOC (Doença pulmonar obstrutiva
+					crônica)</label>
+				<label><input type="checkbox" name="saude[]" value="Doença renal crônica"> Doença renal crônica</label>
+				<label><input type="checkbox" name="saude[]" value="Artrite"> Artrite</label>
+				<label><input type="checkbox" name="saude[]" value="Doença de Alzheimer"> Doença de Alzheimer</label>
+				<label><input type="checkbox" name="saude[]" value="cancer"> Cancer</label>
+
+				<p>outro problema de saúde não listado?</p>
+				<input type="text" name="listado"></p>
+
+				<p>
+				<h3><strong style="font-size: 16px;">Se cancer:</strong></h3>
+				Local? A quanto tempo? Faz tratamento? aonde?</p>
+				<input type="text" name="local"></p>
+
+				<p>Excesso de peso ou obesidade?</p>
+				<label><input type="radio" name="peso" value="sim"> Sim</label>
+				<label><input type="radio" name="peso" value="nao"> Não</label>
+
+				<p>Faz atividade física?</p>
+				<label><input type="radio" name="fisica" value="sim"> Sim</label>
+				<label><input type="radio" name="fisica" value="nao"> Não</label>
+
+				<p>Tabagista?</p>
+				<label><input type="radio" name="tabagista" value="sim"> Sim</label>
+				<label><input type="radio" name="tabagista" value="nao"> Não</label>
+			</div>
+
+			<div id="problemas_musculoesqueleticos_perguntas" style="display: none;">
+				<p>Se dor, aonde esta localizado a dor?</p>
+				<input type="text" name="localizada">
+
+				<p>Se dor,Há quanto tempo iniciou a dor?</p>
+				<input type="text" name="tempo">
+
+				<p>Se dor, qual a intensidade da dor? (0 mais branda a 10 insuportável)</p>
+
+				<div class="radio-container">
+					<input type="radio" name="intensidade" id="1" value="1">
+					<label for="1">1</label>
+
+					<input type="radio" name="intensidade" id="2" value="2">
+					<label for="2">2</label>
+
+					<input type="radio" name="intensidade" id="3" value="3">
+					<label for="3">3</label>
+
+					<input type="radio" name="intensidade" id="4" value="4">
+					<label for="4">4</label>
+
+					<input type="radio" name="intensidade" id="5" value="5">
+					<label for="5">5</label>
+
+					<input type="radio" name="intensidade" id="6" value="6">
+					<label for="6">6</label>
+
+					<input type="radio" name="intensidade" id="7" value="7">
+					<label for="7">7</label>
+
+					<input type="radio" name="intensidade" id="8" value="8">
+					<label for="8">8</label>
+
+					<input type="radio" name="intensidade" id="9" value="9">
+					<label for="9">9</label>
+
+					<input type="radio" name="intensidade" id="10" value="10">
+					<label for="10">10</label>
+				</div>
+
+			</div>
+			<br>
+
+			<div id="problemas_gastrointestinais_perguntas" style="display: none;">
+
+				<p>Há quanto tempo esta com diarréia?</p>
+				<input type="text" name="numero">
+
+				<p>Quantas vezes vai ao banheiro no dia?</p>
+				<input type="text" name="vezes">
+
+				<p>Qual é a consistência?</p>
+				<label><input type="radio" name="consistencia" value="liquida"> Líquida</label>
+				<label><input type="radio" name="consistencia" value="pastosa"> Pastosa</label>
+				<label><input type="radio" name="consistencia" value="formada"> Formada</label>
+				<label><input type="radio" name="consistencia" value="endurecida"> Endurecida</label>
+
+				<p>Há presença de:</p>
+				<label><input type="checkbox" name="presenca[]" value="sangue"> Sangue</label>
+				<label><input type="checkbox" name="presenca[]" value="muco"> Muco</label>
+				<label><input type="checkbox" name="presenca[]" value="pus"> Pus</label>
+
+				<p>Há dor ou desconforto abdominal associado às evacuações?</p>
+				<label><input type="radio" name="dor" value="sim"> Sim</label>
+				<label><input type="radio" name="dor" value="nao"> Não</label>
+
+				<p>Há sinais de desidratação?</p>
+				<label><input type="radio" name="sede" value="sim"> Sede excessiva</label>
+				<label><input type="radio" name="boca_seca" value="sim"> Boca seca</label>
+				<label><input type="radio" name="urina_escassa" value="sim"> Urina escassa</label>
+				<label><input type="radio" name="urina_escura" value="sim"> Urina escura</label>
+				<label><input type="radio" name="tontura" value="sim"> Tontura</label>
+				<label><input type="radio" name="fraqueza" value="sim"> Fraqueza</label>
+
+				<p>Houve perda de peso?</p>
+				<label><input type="radio" name="peso" value="sim"> Sim</label>
+				<label><input type="radio" name="peso" value="nao"> Não</label>
+
+				<p>Você teve contato com alguma pessoa ou alimento que possa ter causado ou agravado a diarréia?</p>
+				<label><input type="radio" name="contato" value="sim"> Sim</label>
+				<label><input type="radio" name="contato" value="nao"> Não</label>
+			</div>
+			<br>
+
+			<div id="alergia_perguntas" style="display: none;">
+				<p>Local da alergia?</p>
+				<input type="text" name="local_alergia"><br>
+
+				<p>Faz uso de alguma medicação para alergia</p>
+				<label><input type="radio" name="medicacao" value="sim">Sim</label>
+				<label><input type="radio" name="medicacao" value="nao">Não</label><br>
+
+				<p>Qual medicação?</p>
+				<input type="text" name="Qual_medicacao_alergia"><br>
+
+				<p>Você tem algum histórico familiar de alergias?</p>
+				<label><input type="radio" name="historico_familiar" value="sim">Sim</label>
+				<label><input type="radio" name="historico_familiar" value="nao">Não</label><br>
+
+				<p>Você já teve alguma reação alérgica antes?</p>
+				<label><input type="radio" name="reacao_alergica_antes" value="sim">Sim</label>
+				<label><input type="radio" name="reacao_alergica_antes" value="nao">Não</label><br>
+
+				<p>Você sabe a quê você é alérgico?</p>
+				<input type="text" name="alergia_conhecida"><br>
+
+				<div>
+					<p>Quais são os sintomas que você apresenta quando tem uma crise alérgica?</p>
+					<label><input type="checkbox" name="sintomas[]" value="urticaria">Urticária ou vermelhidão na
+						pele</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="coceira">Coceira ou ardor na pele, olhos,
+						nariz ou boca</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="inchaco">Inchaço na face, lábios, língua ou
+						garganta</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="espirros">Espirros, coriza, nariz entupido ou
+						sinusite</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="tosse">Tosse, falta de ar, chiado no peito ou
+						asma</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="nauseas">Náuseas, vômitos, diarreia ou dor
+						abdominal</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="tontura">Tontura, desmaio, queda da pressão
+						arterial ou choque anafilático</label><br>
+					<label><input type="checkbox" name="sintomas[]" value="outros">Outros:</label>
+					<input type="text" name="outros_sintomas"><br>
+				</div>
+
+				<p>Quanto tempo demora para os sintomas aparecerem após a exposição ao alérgeno?</p>
+				<input type="text" name="tempo_sintomas"><br>
+
+				<p>Você usa algum medicamento ou tratamento para controlar as alergias?</p>
+				<label><input type="radio" name="reacao_alergica" value="sim">Sim</label>
+				<label><input type="radio" name="reacao_alergica" value="nao">Não</label><br>
+
+				<p>Se sim, qual e com que frequência?</p>
+				<input type="text" name="frequencia">
+			</div>
+
+			<div id="ginecologico_perguntas" style="display: none;">
+				<p>Há quanto tempo você está experimentando esses sintomas?</p>
+				<input type="text" name="tempo_sintomas"><br>
+
+				<p>Você poderia descrever os sintomas em detalhes?</p>
+				<textarea name="descricao_sintomas"></textarea><br>
+
+				<p>Houve algum evento específico que desencadeou esses sintomas?</p>
+				<input type="text" name="evento_desencadeador"><br>
+
+				<p>Como é o seu padrão menstrual? É regular?</p>
+				<input type="text" name="padrao_menstrual"><br>
+
+				<p>Você usa algum método contraceptivo? Qual?</p>
+				<input type="text" name="metodo_contraceptivo"><br>
+
+				<p>Já teve alguma gravidez anteriormente? Se sim, quantas e como foram?</p>
+				<input type="text" name="gravidez_anterior"><br>
+
+				<p>Você já teve algum problema ginecológico no passado? Se sim, poderia descrevê-lo?</p>
+				<textarea name="problema_ginecologico_passado"></textarea><br>
+
+				<p>Você já realizou exames ginecológicos anteriormente, como Papanicolau ou ultrassonografia? Se sim,
+					qual foi o resultado?</p>
+				<textarea name="exames_ginecologicos"></textarea><br>
+
+				<p>Há algum histórico de doenças ginecológicas na sua família?</p>
+				<input type="text" name="historico_doencas"><br>
+
+				<p>Você está sexualmente ativa? Se sim, usa algum método de proteção contra doenças sexualmente
+					transmissíveis?</p>
+				<input type="text" name="sexualmente_ativa"><br>
+
+				<p>Você sente dor durante as relações sexuais?</p>
+				<input type="text" name="dor_relacoes"><br>
+
+				<p>Há algum histórico de infecções urinárias frequentes?</p>
+				<input type="text" name="infeccoes_urinarias"><br>
+
+				<p>Você teve alguma alteração no seu peso recentemente?</p>
+				<input type="text" name="alteracao_peso"><br>
+
+				<p>Você possui algum problema de saúde crônico ou está tomando algum medicamento regularmente?</p>
+				<textarea name="problema_saude"></textarea><br>
+
+				<p>Há algo mais que você gostaria de mencionar ou que eu devo saber sobre sua saúde ginecológica?</p>
+				<textarea name="outras_informacoes"></textarea><br>
+			</div>
+
+
+
+			<p>Possui exames a serem avaliados?</p>
+			<label><input type="radio" name="exames" value="Sim"> Sim</label>
+			<label><input type="radio" name="exames" value="Não"> Não</label></p>
+
+			<p>Quando foi o último exame de sangue que você fez?</p>
+			<input type="text" name="ex_sangue">
+
+			<p>Qual é a pressão arterial?</p>
+			<input type="text" name="pressao">
+
+			<p>Qual é a glicemia capilar? (se diabético)</p>
+			<input type="text" name="glicemia_capilar">
+
+			<p>Qual é o peso?</p>
+			<input type="text" name="av_peso">
+
+			<p>Qual é a temperatura?</p>
+			<input type="text" name="temperatura">
+
+			<p>Observações</p>
+			<input type="text" name="observacoes"></p>
+
+			<p>Encaminhado para:</p>
+			<label><input type="radio" name="encaminhado" value="Médico"> Médico</label>
+			<label><input type="radio" name="encaminhado" value="Enfermeiro"> Enfermeiro</label></p>
+
+			<p><span style="color: red;"><strong>Verificar se o paciente já possui consulta agendada</strong></span></p>
+
+			<br><br>
+			<button type="button" onclick="limparFormulario()">Limpar</button>
+			<button onclick="exibirRespostas()">Exibir Respostas</button>
+		</form>
+	</div>
+	<script src="menu.js"></script>
+	<script src="copiar.js"></script>
+
+</body>
+<script>
+function mostrarOcultarPerguntas(queixa) {
+  console.log('Executando mostrarOcultarPerguntas para:', queixa);
+  ocultarPerguntas();
+
+  var divPerguntas = document.getElementById(queixa + '_perguntas');
+  console.log('divPerguntas:', divPerguntas);
+  if (divPerguntas) {
+    divPerguntas.style.display = 'block';
+  }
+}
+
+function ocultarPerguntas() {
+  console.log('Executando ocultarPerguntas');
+  var perguntas = document.querySelectorAll('[id$="_perguntas"]');
+  console.log('perguntas:', perguntas);
+  for (var i = 0; i < perguntas.length; i++) {
+    perguntas[i].style.display = 'none';
+  }
+}
+
+window.onload = function () {
+  console.log('Página carregada');
+  ocultarPerguntas();
+
+  var radioGinecologico = document.getElementById('radio_ginecologico');
+  console.log('radioGinecologico:', radioGinecologico);
+  radioGinecologico.addEventListener('click', function () {
+    console.log('Opção Problemas Ginecológicos selecionada');
+    mostrarOcultarPerguntas('ginecologico');
+  });
+};
+
+
+
+var medicacoes = [
+  "Aciclovir 200mg - comprimido",
+  "Aciclovir creme",
+  "Ácido Acetil Salicílico 100 mg - comp",
+  "Ácido Fólico 5mg - comprimido",
+  "Ácido Fólico solução oral 0,2mg/ml - frasco 30ml",
+  "Ácido Valpróico 250 mg - comp",
+  "Ácidos Graxos Essenciais - AGE - frasco 200ml",
+  "Albendazol 400mg - comprimido",
+  "Albendazol 400mg suspensão",
+  "Alendronato de sódio 70mg - comprimido",
+  "Alopurinol 300mg - comprimido",
+  "Ambroxol, Cloridrato 3mg/ ml - frs 100 ml",
+  "Amiodarona, cloridrato 200 mg - comp",
+  "Amitriptilina, Cloridrato 25 mg - comp",
+  "Amoxicilina 250+Clavulanato 62,5mg/5ml - fr 75 ml",
+  "Amoxicilina 250mg/5ml - suspensão - frasco 150ml",
+  "Amoxicilina 500+Clavulanato de potássio 125 - cpr",
+  "Amoxicilina 500mg - cápsula",
+  "Anlodipino, besilato 10mg comprimido",
+  "Anlodipino, besilato 5mg comprimido",
+  "Atenolol 50mg comprimido",
+  "Azitromicina 500mg - comprimido",
+  "Azitromicina suspensão oral 40mg/ml contendo 600mg",
+  "Beclometasona 50 mcg - spray inalatório -uso nasal",
+  "Beclometasona 50 mcg spray inalatório -uso oral",
+  "Benzoilmetronidazol suspensão 4% - fr 100 ml",
+  "Biperideno, Cloridrato 2 mg - comp",
+  "Bromoprida 4mg/ml gotas - fr 20ml",
+  "Budesonida 32mcg spray nasal - frasco 120 doses",
+  "Buspirona, Cloridrato 10 mg - comp",
+  "Captopril 25 mg - comp",
+  "Carbamazepina 200 mg - comp",
+  "Carbamazepina xarope 20mg/ml - frasco 100ml",
+  "Carbocisteína 50 mg/ml solução adulto - fr 100 ml",
+  "Carvedilol 12,5mg comprimido",
+  "Carvedilol 3,125mg comprimido",
+  "Cefalexina 50 mg/ml Susp. Oral - frs 60 ml",
+  "Cefalexina 500mg - comp.",
+  "Cetoconazol 2% xampu frasco 100ml",
+  "Cinarizina 75 mg - comp",
+  "Ciprofloxacino, cloridrato de 500mg comprimido",
+  "Claritromicina 50 mg/ml susp. - frasco",
+  "Claritromicina 500 mg - comprimido",
+  "Clindamicina 300mg cápsula",
+  "Clomipramina 25mg - comprimido",
+  "Clonazepam 2 mg - comp",
+  "Cloreto de sódio 0,9% 500ml sistema twist off - frasco",
+  "Cloreto de Sódio solução nasal 0,9% - fr 30 ml",
+  "Clorpromazina 100 mg - comp",
+  "Clorpromazina 25 mg - comp",
+  "Clotrimazol creme - bisn. 20g",
+  "Colagenase Com Cloranfenicol 0,01 g - bisn. 30g",
+  "Colagenase sem Cloranfenicol - bisn. 30g",
+  "Colecalciferol (Vit D3) + Retinol acetato (Vit A) – frasco 10ml",
+  "Dexametasona, Acetato 1 mg/g - bisnaga 10g",
+  "Dexclorfeniramina 0,4% - fr 100 ml",
+  "Dexclorfeniramina 2mg - comp.",
+  "Diazepam 10 mg - comp",
+  "Diazepam 5 mg - comp",
+  "Diclofenaco Sódico 50 mg - comp",
+  "Digoxina 0,25 mg - comp",
+  "Dipirona Gotas 500 mg / ml - fr 10 ml",
+  "Dipirona Sódica 500 mg - comprimidos",
+  "Doxazosina 2 mg comprimido",
+  "Enalapril , maleato 5mg comprimido",
+  "Enalapril, maleato 20 mg - comp",
+  "Enantato de Noretisterona",
+  "Enoxaparina 40mg SC (Heparina de baixo peso) - Seringa VER PROTOCOLO",
+  "Espironolactona 100mg comprimido",
+  "Espironolactona 25mg comprimido",
+  "Fenitoína 100 mg - comp",
+  "Fenobarbital 100 mg - comp",
+  "Fenobarbital 4% gotas - fr 20 ml",
+  "Finasterida 5 mg comprimido",
+  "Fluconazol 150mg - comprimido",
+  "Fluoxetina 20 mg - comprimido",
+  "Furosemida 40 mg - comp",
+  "Glibenclamida 05mg - comp",
+  "Gliclazida 30mg liberação controlada - comprimido",
+  "Haloperidol 2mg/ml gotas - fr 20ml",
+  "Haloperidol 5 mg - comp",
+  "Haloperidol Decanoato 70,52 mg - Amp 1 ml",
+  "Hidroclorotiazida 25 mg - comp",
+  "Hidrocortisona, acetato creme 1% bisnaga 30g",
+  "Hidróxido de Alumínio - frs 150 ml",
+  "Hipromelose colírio 0,3% - frasco 10ml",
+  "Ibuprofeno 600mg comprimido",
+  "Ibuprofeno suspensão oral 50mg/ml frasco de 30ml",
+  "Imipramina, Cloridrato 25 mg - comp",
+  "Insulina Humana NPH 100UI/ml - Frs-amp.10ml",
+  "Insulina NPH 100UI/ml - caneta 3ml",
+  "Insulina Regular 100UI/ml - caneta 3ml",
+  "Insulina Regular Humana U-100 - Frs-amp 10 ml",
+  "Isossorbida, Mononitrato- 20 mg - comp",
+  "Isoxsuprina, cloridrato 10mg - comprimido",
+  "Ivermectina 6mg comprimido",
+  "Lactulose xarope- frasco 120ml",
+  "Levodopa 100mg + Benserazida 25mg - comprimido",
+  "Levodopa 100mg + Benserazida 25mg sistema HBS- cápsula liberação prolongada",
+  "Levodopa 200mg + Benserazida 50mg - comprimido",
+  "Levodopa 250mg + Carbidopa 25mg - comprimido",
+  "Levomepromazina 100 mg - comp",
+  "Levomepromazina 25 mg - comp",
+  "Levomepromazina 4% sol. 40 mg/ml gotas - fr 20 ml",
+  "Levonorgestrel 0,15+ Etinilestradiol 0,03mg - cartela /21",
+  "Levonorgestrel 0,75mg comprimido - cartela/2",
+  "Levotiroxina 100mcg - comprimido",
+  "Levotiroxina 25mcg - comprimido",
+  "Levotiroxina 50mcg - comprimido",
+  "Lidocaína, Cloridrato + Metilcelulose 2% geléia - tubo 30 ml",
+  "Lítio, Carbonato 300 mg - comp",
+  "Loperamida 2mg comprimido",
+  "Loratadina 10mg comprimido",
+  "Loratadina xarope 1mg/ml frasco 100ml",
+  "Losartana Potássica 50 mg - cpr",
+  "Medicamentos controlados",
+  "Medroxiprogesterona, acetato 150mg/ml sol. Inj.",
+  "Metformina, cloridrato 500mg XR comprimido",
+  "Metformina, cloridrato 850 mg - comprimido",
+  "Metildopa 250 mg - comp",
+  "Metilfenidato, cloridrato 20mg LA  cápsulas VER PROTOCOLO",
+  "Metilfenidato, cloridrato 54mg  cápsulas VER PROTOCOLO",
+  "Metoprolol, succinato 25mg - comprimido",
+  "Metoprolol, succinato 50mg - comprimido",
+  "Metronidazol + Nistatina creme - bisnaga 50 g",
+  "Metronidazol 250 mg - comp",
+  "Miconazol, nitrato loção 2% frasco 30ml",
+  "Naltrexona 50mg - comprimido",
+  "Neomicina, Sulfato+Bacitracina - bisnaga 10g",
+  "Nistatina suspensão 100.000 UI/ml - fr 50 ml",
+  "Nitrazepan 5 mg - comprimido",
+  "Nitrofurantoína 100mg cápsula",
+  "Noretisterona 0,35mg - cart 35 comp",
+  "Nortriptilina 25mg - comprimido",
+  "Óleo Mineral - fr 100 ml",
+  "Omeprazol 20 mg - comprimido",
+  "Ondansetrona 4mg, cloridrato- comprimido",
+  "Ondansetrona 8 mg comprimidos",
+  "Óxido de Zinco + Vitamina AD - bisn.45g",
+  "Paracetamol 200 mg/ml - fr 15 ml",
+  "Paracetamol 500 mg - cpr",
+  "Permetrina loção 5% - frasco 60ml",
+  "Prednisolona 3mg/ml - frasco 60ml",
+  "Prednisona 20 mg - comprimido",
+  "Prednisona 5 mg - comprimido",
+  "Progesterona 100mg cápsula",
+  "Prometazina, Cloridrato 25 mg - comp",
+  "Propafenona 300 mg comprimidos",
+  "Propranolol, Cloridrato 40 mg - comp",
+  "Rivaroxabana 10 mg – comprimidos VER PROTOCOLO",
+  "Sais para Reidratação Oral - envelope 27gr.",
+  "Salbutamol 100 mcg - aerosol inalatório",
+  "Sertralina 50mg - comprimido",
+  "Sinvastatina 20 mg comprimido",
+  "Sódio Cloreto 0,9% 100ml sistema twist off – frasco",
+  "Sulfadiazina de Prata 10mg/g - bisnaga 30g",
+  "Sulfametoxazol 4% + Trimetoprima 0,8% susp - fr 100 ml",
+  "Sulfametoxazol 400 mg + Trimetoprima 80 mg - comp",
+  "Sulfato Ferroso (40 mg de Ferro Elementar) - comp",
+  "Sulfato Ferroso 125 mg/ml gotas - fr 30 ml",
+  "Tiamina 300mg (vit B1) - comprimido",
+  "Tioridazina 100mg - comprimido",
+  "Tobramicina sol oftálmica - fr 5 ml",
+  "Valproato de Sódio 57,624mg/ml (equivalente a 50mg/ml de acido valproico) Xarope-frs 100ml",
+  "Varfarina sódica 5mg comprimido",
+  "Verapamil, cloridrato 80mg comprimido"
+];
+function carregarOpcoesMedicacoes() {
+  var select = document.getElementById("medicacoes");
+
+  medicacoes.forEach(function (medicacao) {
+    var option = document.createElement("option");
+    option.text = medicacao;
+    select.add(option);
+  });
+}
+
+function adicionarMedicacao(event) {
+  event.preventDefault();
+
+  var select = document.getElementById("medicacoes");
+  var option = select.options[select.selectedIndex];
+
+  if (option) {
+    var menuMedicacoes = document.getElementById("menu-medicacoes");
+
+    var novoItem = document.createElement("li");
+    novoItem.textContent = option.text;
+
+    menuMedicacoes.appendChild(novoItem);
+
+    // Limpa o campo de entrada de medicação após adicionar
+    document.getElementById("medicacao").value = "";
+  } else {
+    console.log("Nenhum item selecionado.");
+  }
+}
+
+function removerMedicacao() {
+  var menuMedicacoes = document.getElementById("menu-medicacoes");
+  var ultimoItem = menuMedicacoes.lastElementChild;
+
+  if (ultimoItem) {
+    menuMedicacoes.removeChild(ultimoItem);
+  } else {
+    console.log("Nenhum item para remover.");
+  }
+}
+
+carregarOpcoesMedicacoes();
+</script>
+<script>
+copiar.js
+</script>
+<script>
+
+function toggleMenu() {
+    var menu = document.getElementById("menu");
+    menu.classList.toggle("show");
+  }
+  
+  function closeMenuOutside(event) {
+    var menu = document.getElementById("menu");
+    var menuToggle = document.getElementById("menu-toggle");
+  
+    if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+      menu.classList.remove("show");
+      document.removeEventListener("click", closeMenuOutside);
+    }
+  }
+  
+  function updateTime() {
+    var dateTimeElement = document.getElementById("date-time");
+    var currentDate = new Date();
+    var dateTimeString = currentDate.toLocaleString();
+    dateTimeElement.innerHTML = dateTimeString;
+  }
+  
+  setInterval(updateTime, 1000);
+  
+  var menuToggle = document.getElementById("menu-toggle");
+  menuToggle.addEventListener("click", toggleMenu);
+</script>
+</html>
